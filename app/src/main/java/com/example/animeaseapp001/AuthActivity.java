@@ -17,10 +17,10 @@ import android.widget.TextView;
 import com.airbnb.lottie.LottieAnimationView;
 
 public class AuthActivity extends AppCompatActivity {
-    static LottieAnimationView lavAuth;
-    static Button btnLogin;
-    static Button btnRegister;
-    static TextView tvWelcome;
+    LottieAnimationView lavAuth;
+    Button btnLogin;
+    Button btnRegister;
+    TextView tvWelcome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,29 +30,19 @@ public class AuthActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
         tvWelcome = findViewById(R.id.tvWelcome);
-        lavAuth.setVisibility(View.INVISIBLE);
-        btnLogin.setVisibility(View.INVISIBLE);
-        btnRegister.setVisibility(View.INVISIBLE);
-        tvWelcome.setVisibility(View.INVISIBLE);
 
         startAnimation();
 
         btnLogin.setOnClickListener(v -> {
-            startAnimation();
         });
         btnRegister.setOnClickListener(v -> {
         });
     }
-    public static void startAnimation(){
-
-        lavAuth.setVisibility(View.VISIBLE);
-        btnLogin.setVisibility(View.VISIBLE);
-        btnRegister.setVisibility(View.VISIBLE);
-        tvWelcome.setVisibility(View.VISIBLE);
+    public void startAnimation(){
 
         // Animation for Welcome TextView
         // Keeping track of the initial scale of the TextView
-        float tvWelcomeInitialScaleX = AuthActivity.tvWelcome.getScaleX();
+        float tvWelcomeInitialScaleX = tvWelcome.getScaleX();
         float tvWelcomeInitialScaleY = tvWelcome.getScaleY();
         //scaling the TextView down to its normal size
         ObjectAnimator tvWelcomeScaleXAnimator = ObjectAnimator.ofFloat(tvWelcome,"scaleX",tvWelcomeInitialScaleX+0.5f,tvWelcomeInitialScaleX);
@@ -60,7 +50,7 @@ public class AuthActivity extends AppCompatActivity {
         tvWelcomeScaleXAnimator.setDuration(500);
         tvWelcomeScaleYAnimator.setDuration(500);
         ObjectAnimator tvWelcomeAlphaAnimator = ObjectAnimator.ofFloat(tvWelcome,"alpha",0f,1f);
-        tvWelcomeAlphaAnimator.setDuration(600);
+        tvWelcomeAlphaAnimator.setDuration(400);
         //setting interpolators for TextView, decelerate means the animation will start fast and slowly slow down
         tvWelcomeScaleXAnimator.setInterpolator(new DecelerateInterpolator());
         tvWelcomeScaleYAnimator.setInterpolator(new DecelerateInterpolator());
@@ -98,6 +88,10 @@ public class AuthActivity extends AppCompatActivity {
 
         AnimatorSet mainAnimatorSet = new AnimatorSet();
         mainAnimatorSet.playSequentially(tvWelcomeAnimatorSet,btnLoginAnimatorSet,btnRegisterAnimatorSet,lavAnimatorSet);
+        lavAuth.setVisibility(View.VISIBLE);
+        btnLogin.setVisibility(View.VISIBLE);
+        btnRegister.setVisibility(View.VISIBLE);
+        tvWelcome.setVisibility(View.VISIBLE);
         mainAnimatorSet.start();
     }
 }
