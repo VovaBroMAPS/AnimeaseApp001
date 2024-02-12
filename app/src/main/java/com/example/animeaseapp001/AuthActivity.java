@@ -27,13 +27,14 @@ public class AuthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
         lavAuth = findViewById(R.id.lavAuth);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnRegister = findViewById(R.id.btnRegister);
+        btnLogin = findViewById(R.id.btnAuthLogin);
+        btnRegister = findViewById(R.id.btnAuthRegister);
         tvWelcome = findViewById(R.id.tvWelcome);
 
         startAnimation();
 
         btnLogin.setOnClickListener(v -> {
+            startAnimation();
         });
         btnRegister.setOnClickListener(v -> {
         });
