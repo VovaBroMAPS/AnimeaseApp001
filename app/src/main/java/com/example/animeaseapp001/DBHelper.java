@@ -17,7 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String USER_MAIL = "mail";
 
     public DBHelper(@Nullable Context context) {
-        super(context, "studentsDB.db", null, 1);
+        super(context, "usersDB.db", null, 1);
     }
 
     @Override
