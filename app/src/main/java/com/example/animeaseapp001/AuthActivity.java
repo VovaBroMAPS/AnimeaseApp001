@@ -7,6 +7,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationSet;
@@ -34,9 +35,12 @@ public class AuthActivity extends AppCompatActivity {
         startAnimation();
 
         btnLogin.setOnClickListener(v -> {
-            startAnimation();
+            Intent intent = new Intent(AuthActivity.this,LoginActivity.class);
+            startActivity(intent);
         });
         btnRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(AuthActivity.this,RegisterActivity.class);
+            startActivity(intent);
         });
     }
     public void startAnimation(){

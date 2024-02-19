@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showMessage() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomAlertDialogAnimation);
         builder.setTitle("Fail");
         builder.setMessage("Incorrect email/password, make sure the details are correct and try again.");
         builder.setIcon(R.drawable.ic_msg_failed);
@@ -69,4 +69,5 @@ public class LoginActivity extends AppCompatActivity {
         db.close();
         return false;
     }
+
 }

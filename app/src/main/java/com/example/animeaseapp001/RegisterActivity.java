@@ -3,11 +3,13 @@ package com.example.animeaseapp001;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +21,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button btnRegister;
     DBHelper dbHelper;
     SQLiteDatabase db;
+    String[] userInfoArray = new String[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +32,23 @@ public class RegisterActivity extends AppCompatActivity {
         etRegisterEmail = findViewById(R.id.etRegisterEmail);
         etRegisterPassword = findViewById(R.id.etRegisterPassword);
         etRegisterConfirmPassword = findViewById(R.id.etRegisterConfirmPassword);
+        btnRegister = findViewById(R.id.btnRegister);
 
-
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isFound(etRegisterEmail.getText().toString(), etRegisterPassword.getText().toString())) {
+                    showMessage();
+                } else {
+                    insertUser();
+                    Intent intent = new Intent(RegisterActivity.this,HomeActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
+
+
 
     public boolean isFound(String email, String password) {
         dbHelper = new DBHelper(RegisterActivity.this);
@@ -50,8 +67,9 @@ public class RegisterActivity extends AppCompatActivity {
         db.close();
         return false;
     }
+
     public void showMessage(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.CustomAlertDialogAnimation);
         builder.setTitle("Error");
         builder.setMessage("User already exists, try login instead?");
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -62,6 +80,28 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
         builder.setNegativeButton("NO",null);
-        }
+    }
+
+    private void insertUser(){
+        userInfoArray[0]=etRegisterUsername.getText().toString();
+        userInfoArray[1]=etRegisterPassword.getText().toString();
+        userInfoArray[2]=etRegisterEmail.getText().toString();
+
+        ContentValues cv=new ContentValues();
+        dbHelper=new DBHelper(RegisterActivity.this);
+        db=dbHelper.getWritableDatabase();
+
+        cv.put(DBHelper.USER_NAME,userInfoArray[0]);
+        cv.put(DBHelper.USER_PASS,userInfoArray[1]);
+        cv.put(DBHelper.USER_MAIL,userInfoArray[2]);
+
+        db.insert(DBHelper.TABLE_NAME,null,cv);
+        db.close();
+
+        etRegisterUsername.setText("");
+        etRegisterPassword.setText("");
+        etRegisterConfirmPassword.setText("");
+        etRegisterEmail.setText("");
+
     }
 }
