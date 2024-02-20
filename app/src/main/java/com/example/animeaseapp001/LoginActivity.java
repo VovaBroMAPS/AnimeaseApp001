@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         c.moveToFirst();
         int indexEmail = c.getColumnIndex(DBHelper.USER_MAIL);
         int indexPassword = c.getColumnIndex(DBHelper.USER_PASS);
-        while(c.isAfterLast()==false){
+        while(!c.isAfterLast()){
             if(c.getString(indexEmail).equals(email) && c.getString((indexPassword)).equals(password)){
                 return true;
             }

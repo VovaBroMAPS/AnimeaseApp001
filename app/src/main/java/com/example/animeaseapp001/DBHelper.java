@@ -25,7 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String s="CREATE TABLE "+TABLE_NAME+" (";
         s+=USER_NAME+" TEXT, ";
         s+=USER_PASS+" TEXT, ";
-        s+=USER_MAIL+" TEXT, ";
+        s+=USER_MAIL+" TEXT)";
         db.execSQL(s);
     }
 

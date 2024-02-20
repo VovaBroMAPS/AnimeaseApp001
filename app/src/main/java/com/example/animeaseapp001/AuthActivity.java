@@ -19,8 +19,8 @@ import com.airbnb.lottie.LottieAnimationView;
 
 public class AuthActivity extends AppCompatActivity {
     LottieAnimationView lavAuth;
-    Button btnLogin;
-    Button btnRegister;
+    Button btnAuthLogin;
+    Button btnAuthRegister;
     TextView tvWelcome;
 
     @Override
@@ -28,22 +28,38 @@ public class AuthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
         lavAuth = findViewById(R.id.lavAuth);
-        btnLogin = findViewById(R.id.btnAuthLogin);
-        btnRegister = findViewById(R.id.btnAuthRegister);
+        btnAuthLogin = findViewById(R.id.btnAuthLogin);
+        btnAuthRegister = findViewById(R.id.btnAuthRegister);
         tvWelcome = findViewById(R.id.tvWelcome);
 
         startAnimation();
 
-        btnLogin.setOnClickListener(v -> {
-            Intent intent = new Intent(AuthActivity.this,LoginActivity.class);
-            startActivity(intent);
+        btnAuthLogin.setOnClickListener(v -> {
+            startAnimation();
+
+            // intent = new Intent(AuthActivity.this,LoginActivity.class);
+            //startActivity(intent);
         });
-        btnRegister.setOnClickListener(v -> {
+        btnAuthRegister.setOnClickListener(v -> {
             Intent intent = new Intent(AuthActivity.this,RegisterActivity.class);
             startActivity(intent);
         });
+
     }
     public void startAnimation(){
+        AnimatorSet tvWelcomeAnimatorSet = new AnimatorSet();
+        AnimatorSet lavAuthAndBtnAnimatorSet = new AnimatorSet();
+        CustomAnimationHelper tvWelcomeAnimator = new CustomAnimationHelper(new View[]{tvWelcome},tvWelcomeAnimatorSet, CustomAnimationHelper.InterpolatorType.DECELERATE);
+        CustomAnimationHelper lavAuthAndBtnAnimator = new CustomAnimationHelper(new View[]{lavAuth,btnAuthLogin,btnAuthRegister},lavAuthAndBtnAnimatorSet, CustomAnimationHelper.InterpolatorType.DECELERATE);
+
+        lavAuth.setVisibility(View.VISIBLE);
+        btnAuthLogin.setVisibility(View.VISIBLE);
+        btnAuthRegister.setVisibility(View.VISIBLE);
+        tvWelcome.setVisibility(View.VISIBLE);
+        tvWelcomeAnimator.scaleIn(800,0.5f,0.5f);
+        lavAuthAndBtnAnimator.slideIn(800,0f,30f);
+    }
+    /*public void startAnimation(){
 
         // Animation for Welcome TextView
         // Keeping track of the initial scale of the TextView
@@ -99,4 +115,5 @@ public class AuthActivity extends AppCompatActivity {
         tvWelcome.setVisibility(View.VISIBLE);
         mainAnimatorSet.start();
     }
+     */
 }

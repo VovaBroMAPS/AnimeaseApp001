@@ -28,7 +28,7 @@ public class KeyframesDB extends SQLiteOpenHelper {
         s+=TRANSLATION_X+" TEXT, ";
         s+=TRANSLATION_Y+" TEXT, ";
         s+=ROTATION_Y+" TEXT, ";
-        s+=ALPHA+" TEXT, ";
+        s+=ALPHA+" TEXT)";
         db.execSQL(s);
     }
 
