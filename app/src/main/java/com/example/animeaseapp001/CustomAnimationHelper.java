@@ -13,7 +13,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +20,7 @@ public class CustomAnimationHelper {
     private final View[] views;
     private final InterpolatorType interpolatorType;
     private AnimatorSet overallAnimatorSet;
+    private boolean playTogether;
 
     public enum InterpolatorType {
         EASE_IN_OUT,
@@ -32,85 +32,130 @@ public class CustomAnimationHelper {
         BOUNCE
     }
 
-    public CustomAnimationHelper(View[] views, AnimatorSet overallAnimatorSet, InterpolatorType interpolatorType) {
+    public CustomAnimationHelper(View[] views, AnimatorSet overallAnimatorSet, InterpolatorType interpolatorType,boolean playTogether) {
         this.views = views;
         this.overallAnimatorSet = overallAnimatorSet;
         this.interpolatorType = interpolatorType;
+        this.playTogether = playTogether;
     }
 
     public void fadeIn(int duration) {
-        AnimatorSet viewAnimatorSet = new AnimatorSet();
-        this.overallAnimatorSet = new AnimatorSet();
-        for (int i=0; i<this.views.length; i++){
-            ObjectAnimator alphaAnimator =ObjectAnimator.ofFloat(this.views[i], "alpha", 0f, 1f);
-            alphaAnimator.setDuration(duration);
-            alphaAnimator.setInterpolator(getInterpolator());
-            viewAnimatorSet.playTogether(alphaAnimator);
+        if(!isPlaying()){
+            List<Animator> animatorSets = new ArrayList<>();
+
+            for (int i=0; i<this.views.length; i++){
+                ObjectAnimator alphaAnimator =ObjectAnimator.ofFloat(this.views[i], "alpha", 0f, 1f);
+                AnimatorSet viewAnimatorSet = new AnimatorSet();
+
+                alphaAnimator.setDuration(duration);
+                alphaAnimator.setInterpolator(getInterpolator());
+                viewAnimatorSet.playTogether(alphaAnimator);
+                animatorSets.add(viewAnimatorSet);
+            }
+
+            if(playTogether)
+                this.overallAnimatorSet.playTogether(animatorSets);
+            else
+                this.overallAnimatorSet.playSequentially(animatorSets);
+
+            this.overallAnimatorSet.start();
         }
-        this.overallAnimatorSet.playSequentially();
-        this.overallAnimatorSet.start();
     }
 
     public void fadeOut(int duration) {
-        AnimatorSet viewAnimatorSet = new AnimatorSet();
-        this.overallAnimatorSet = new AnimatorSet();
-        for (int i=0; i<this.views.length; i++){
-            ObjectAnimator alphaAnimator =ObjectAnimator.ofFloat(this.views[i], "alpha", 1f, 0f);
-            alphaAnimator.setDuration(duration);
-            alphaAnimator.setInterpolator(getInterpolator());
-            viewAnimatorSet.playTogether(alphaAnimator);
+        if(!isPlaying()){
+            List<Animator> animatorSets = new ArrayList<>();
+
+            for (int i=0; i<this.views.length; i++){
+                AnimatorSet viewAnimatorSet = new AnimatorSet();
+                ObjectAnimator alphaAnimator =ObjectAnimator.ofFloat(this.views[i], "alpha", 0f, 1f);
+
+                alphaAnimator.setDuration(duration);
+                alphaAnimator.setInterpolator(getInterpolator());
+                viewAnimatorSet.playTogether(alphaAnimator);
+                animatorSets.add(viewAnimatorSet);
+            }
+
+            if(playTogether)
+                this.overallAnimatorSet.playTogether(animatorSets);
+            else
+                this.overallAnimatorSet.playSequentially(animatorSets);
+
+            this.overallAnimatorSet.start();
         }
-        this.overallAnimatorSet.playSequentially();
-        this.overallAnimatorSet.start();
     }
 
     public void slideIn(int duration, float translateXFrom, float translateYFrom) {
-        AnimatorSet viewAnimatorSet = new AnimatorSet();
-        this.overallAnimatorSet = new AnimatorSet();
-        float viewTranslationX, viewTranslationY;
+        if(!isPlaying()){
+            List<Animator> animatorSets = new ArrayList<>();
 
-        for(int i=0; i<this.views.length; i++){
-            viewTranslationX = this.views[i].getTranslationX();
-            viewTranslationY = this.views[i].getTranslationY();
-            ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(this.views[i], "alpha", 0f, 1f);
-            ObjectAnimator translationXAnimator = ObjectAnimator.ofFloat(this.views[i],"translationX",viewTranslationX+translateXFrom,viewTranslationX);
-            ObjectAnimator translationYAnimator = ObjectAnimator.ofFloat(this.views[i],"translationY",viewTranslationY+translateYFrom,viewTranslationY);
+            for(int i=0; i<this.views.length; i++){
+                AnimatorSet viewAnimatorSet = new AnimatorSet();
+                List<Animator> animators = new ArrayList<>();
 
-            viewAnimatorSet.playTogether(alphaAnimator,translationXAnimator,translationYAnimator);
-            this.overallAnimatorSet.playSequentially(viewAnimatorSet);
+                ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(this.views[i], "alpha", 0f, 1f);
+                ObjectAnimator translationXAnimator = ObjectAnimator.ofFloat(this.views[i],"translationX",translateXFrom,0f);
+                ObjectAnimator translationYAnimator = ObjectAnimator.ofFloat(this.views[i],"translationY",translateYFrom,0f);
+
+                animators.add(alphaAnimator);
+                animators.add(translationXAnimator);
+                animators.add(translationYAnimator);
+
+                viewAnimatorSet.playTogether(animators);
+                viewAnimatorSet.setDuration(duration);
+                viewAnimatorSet.setInterpolator(getInterpolator());
+
+                animatorSets.add(viewAnimatorSet);
+            }
+
+            if(playTogether)
+                this.overallAnimatorSet.playTogether(animatorSets);
+            else
+                this.overallAnimatorSet.playSequentially(animatorSets);
+
+            this.overallAnimatorSet.start();
         }
-
-        viewAnimatorSet.setDuration(duration);
-        viewAnimatorSet.setInterpolator(getInterpolator());
-        this.overallAnimatorSet.start();
     }
 
     public void slideOut(int duration, float translateXTo, float translateYTo) {
-        AnimatorSet viewAnimatorSet = new AnimatorSet();
-        this.overallAnimatorSet = new AnimatorSet();
+        if(!isPlaying()){
+            List<Animator> animatorSets = new ArrayList<>();
 
-        for(int i=0; i<this.views.length; i++){
-            ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(this.views[i], "alpha", 1f, 0f);
-            ObjectAnimator translationXAnimator = ObjectAnimator.ofFloat(this.views[i],"translationX",0f,translateXTo);
-            ObjectAnimator translationYAnimator = ObjectAnimator.ofFloat(this.views[i],"translationY",0f,translateYTo);
+            for(int i=0; i<this.views.length; i++){
+                AnimatorSet viewAnimatorSet = new AnimatorSet();
+                List<Animator> animators = new ArrayList<>();
 
-            viewAnimatorSet.playTogether(alphaAnimator,translationXAnimator,translationYAnimator);
-            this.overallAnimatorSet.playSequentially(viewAnimatorSet);
-        }
+                ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(this.views[i], "alpha", 1f, 0f);
+                ObjectAnimator translationXAnimator = ObjectAnimator.ofFloat(this.views[i],"translationX",0f,translateXTo);
+                ObjectAnimator translationYAnimator = ObjectAnimator.ofFloat(this.views[i],"translationY",0f,translateYTo);
 
-        viewAnimatorSet.setDuration(duration);
-        viewAnimatorSet.setInterpolator(getInterpolator());
-        if(!isPlaying())
+                animators.add(alphaAnimator);
+                animators.add(translationXAnimator);
+                animators.add(translationYAnimator);
+
+                viewAnimatorSet.playTogether(animators);
+                viewAnimatorSet.setDuration(duration);
+                viewAnimatorSet.setInterpolator(getInterpolator());
+
+                animatorSets.add(viewAnimatorSet);
+            }
+
+            if(playTogether)
+                this.overallAnimatorSet.playTogether(animatorSets);
+            else
+                this.overallAnimatorSet.playSequentially(animatorSets);
+
             this.overallAnimatorSet.start();
+        }
     }
 
     public void scaleIn(int duration,float scaleXFrom, float scaleYFrom){
         if(!isPlaying()){
-            AnimatorSet viewAnimatorSet = new AnimatorSet();
-            this.overallAnimatorSet = new AnimatorSet();
-            List<Animator> animators = new ArrayList<>();
+            List<Animator> animatorSets = new ArrayList<>();
 
             for(int i=0; i<this.views.length; i++){
+                AnimatorSet viewAnimatorSet = new AnimatorSet();
+                List<Animator> animators = new ArrayList<>();
                 ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(this.views[i], "alpha", 0f, 1f);
                 ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(this.views[i],"scaleX",1f+scaleXFrom,1f);
                 ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(this.views[i],"scaleY", 1f+scaleYFrom,1f);
@@ -119,42 +164,51 @@ public class CustomAnimationHelper {
                 animators.add(scaleXAnimator);
                 animators.add(scaleYAnimator);
 
+                viewAnimatorSet.playTogether(animators);
+                viewAnimatorSet.setDuration(duration);
+                viewAnimatorSet.setInterpolator(getInterpolator());
+                animatorSets.add(viewAnimatorSet);
             }
-            viewAnimatorSet.playTogether(animators);
-            viewAnimatorSet.setDuration(duration);
-            viewAnimatorSet.setInterpolator(getInterpolator());
-            this.overallAnimatorSet.playSequentially(viewAnimatorSet);
+
+            if(playTogether)
+                this.overallAnimatorSet.playTogether(animatorSets);
+            else
+                this.overallAnimatorSet.playSequentially(animatorSets);
+
             this.overallAnimatorSet.start();
         }
     }
 
     public void scaleOut(int duration,float scaleXTo, float scaleYTo){
         if(!isPlaying()){
-            AnimatorSet viewAnimatorSet = new AnimatorSet();
-            this.overallAnimatorSet = new AnimatorSet();
-            List<Animator> animators = new ArrayList<>();
+            List<Animator> animatorSets = new ArrayList<>();
 
             for(int i=0; i<this.views.length; i++){
+                AnimatorSet viewAnimatorSet = new AnimatorSet();
+                List<Animator> animators = new ArrayList<>();
                 ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(this.views[i], "alpha", 1f, 0f);
-                ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(this.views[i],"scaleX",0f,scaleXTo);
-                ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(this.views[i],"scaleY", 0f,scaleYTo);
+                ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(this.views[i],"scaleX",1f,1f+scaleXTo);
+                ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(this.views[i],"scaleY", 1f,1f+scaleYTo);
 
                 animators.add(alphaAnimator);
                 animators.add(scaleXAnimator);
                 animators.add(scaleYAnimator);
 
+                viewAnimatorSet.playTogether(animators);
+                viewAnimatorSet.setDuration(duration);
+                viewAnimatorSet.setInterpolator(getInterpolator());
+                animatorSets.add(viewAnimatorSet);
             }
-            viewAnimatorSet.playTogether(animators);
-            viewAnimatorSet.setDuration(duration);
-            viewAnimatorSet.setInterpolator(getInterpolator());
-            this.overallAnimatorSet.playSequentially(viewAnimatorSet);
+
+            if(playTogether)
+                this.overallAnimatorSet.playTogether(animatorSets);
+            else
+                this.overallAnimatorSet.playSequentially(animatorSets);
+
             this.overallAnimatorSet.start();
         }
     }
 
-    public boolean isPlaying(){
-        return overallAnimatorSet.isRunning() || overallAnimatorSet.isStarted();
-    }
     public Interpolator getInterpolator() {
         switch (interpolatorType) {
             case EASE_IN_OUT:
@@ -174,5 +228,9 @@ public class CustomAnimationHelper {
             default:
                 return new AccelerateDecelerateInterpolator();
         }
+    }
+
+    public boolean isPlaying(){
+        return overallAnimatorSet.isRunning() || overallAnimatorSet.isStarted();
     }
 }
