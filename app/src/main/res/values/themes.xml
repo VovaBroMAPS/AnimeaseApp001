@@ -1,8 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.AnimeaseApp001" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/vibrant_mint</item>
+        <item name="colorPrimaryDark">@color/dark_mint</item>
+        <item name="colorAccent">@color/light_mint</item>
+        <item name="android:windowBackground">@color/white_green</item>
     </style>
 
     <style name="Theme.AnimeaseApp001" parent="Base.Theme.AnimeaseApp001" />
