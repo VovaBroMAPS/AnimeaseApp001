@@ -149,6 +149,64 @@ public class CustomAnimationHelper {
         }
     }
 
+    public void rotateIn(int duration, float rotateToDegree) {
+        //if(!isPlaying()){
+            List<Animator> animatorSets = new ArrayList<>();
+
+            for(int i=0; i<this.views.length; i++) {
+                AnimatorSet viewAnimatorSet = new AnimatorSet();
+                List<Animator> animators = new ArrayList<>();
+                ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(this.views[i],"alpha",0,1);
+                ObjectAnimator rotationAnimator = ObjectAnimator.ofFloat(this.views[i],"rotation",0,rotateToDegree);
+
+                animators.add(alphaAnimator);
+                animators.add(rotationAnimator);
+
+                viewAnimatorSet.playTogether(animators);
+                viewAnimatorSet.setDuration(duration);
+                viewAnimatorSet.setInterpolator(getInterpolator());
+                animatorSets.add(viewAnimatorSet);
+            }
+
+            if(this.playTogether){
+                this.overallAnimatorSet.playTogether(animatorSets);
+            }
+            else{
+                this.overallAnimatorSet.playSequentially(animatorSets);
+            }
+            this.overallAnimatorSet.start();
+        //}
+    }
+
+    public void rotateOut(int duration, float rotateToDegree) {
+        if(!isPlaying()){
+            List<Animator> animatorSets = new ArrayList<>();
+
+            for(int i=0; i<this.views.length; i++) {
+                AnimatorSet viewAnimatorSet = new AnimatorSet();
+                List<Animator> animators = new ArrayList<>();
+                ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(this.views[i],"alpha",1,0);
+                ObjectAnimator rotationAnimator = ObjectAnimator.ofFloat(this.views[i],"rotation",rotateToDegree,0);
+
+                animators.add(alphaAnimator);
+                animators.add(rotationAnimator);
+
+                viewAnimatorSet.playTogether(animators);
+                viewAnimatorSet.setDuration(duration);
+                viewAnimatorSet.setInterpolator(getInterpolator());
+                animatorSets.add(viewAnimatorSet);
+            }
+
+            if(this.playTogether){
+                this.overallAnimatorSet.playTogether(animatorSets);
+            }
+            else{
+                this.overallAnimatorSet.playSequentially(animatorSets);
+            }
+            this.overallAnimatorSet.start();
+        }
+    }
+
     public void scaleIn(int duration,float scaleXFrom, float scaleYFrom){
         if(!isPlaying()){
             List<Animator> animatorSets = new ArrayList<>();

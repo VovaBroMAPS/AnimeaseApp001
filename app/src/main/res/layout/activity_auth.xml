@@ -8,14 +8,16 @@
     tools:context=".AuthActivity"
     android:gravity="center">
 
-    <TextView
-        android:id="@+id/tvWelcome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Welcome to Animease"
-        android:gravity="center"
-        android:textSize="30dp"
-        android:layout_marginBottom="50dp"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lavWelcome"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        app:lottie_renderMode="hardware"
+        app:lottie_repeatMode="reverse"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/welcome_animation"
+        app:lottie_autoPlay="true"
+        android:layout_marginBottom="30dp"/>
 
     <Button
         android:id="@+id/btnAuthLogin"
@@ -37,6 +39,7 @@
         android:layout_marginTop="10dp"
         android:layout_width="400dp"
         android:layout_height="300dp"
+        app:lottie_renderMode="hardware"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/auth_animation"
