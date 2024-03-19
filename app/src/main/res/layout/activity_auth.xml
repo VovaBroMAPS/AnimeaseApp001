@@ -11,7 +11,7 @@
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lavWelcome"
         android:layout_width="500dp"
-        android:layout_height="165dp"
+        android:layout_height="155dp"
         app:lottie_renderMode="hardware"
         app:lottie_repeatMode="reverse"
         app:lottie_loop="true"

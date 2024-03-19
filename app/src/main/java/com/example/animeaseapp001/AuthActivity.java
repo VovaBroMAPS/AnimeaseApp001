@@ -105,7 +105,7 @@ public class AuthActivity extends AppCompatActivity {
                     }
                 });
             }
-        },4200);
+        },4500);
 
         AnimatorSet tvWelcomeSlideInAnimatorSet = new AnimatorSet();
         AnimatorSet tvWelcomeSlideOutAnimatorSet = new AnimatorSet();
@@ -113,16 +113,16 @@ public class AuthActivity extends AppCompatActivity {
         CustomAnimationHelper tvWelcomeSlideOutAnimator = new CustomAnimationHelper(new View[]{lavWelcome},tvWelcomeSlideOutAnimatorSet,CustomAnimationHelper.InterpolatorType.ACCELERATE,true);
 
         AnimatorSet grassImageViewScaleInAnimatorSet = new AnimatorSet();
-        AnimatorSet grassImageViewScaleOutAnimatorSet = new AnimatorSet();
+        AnimatorSet grassImageViewFadeOutAnimatorSet = new AnimatorSet();
         CustomAnimationHelper grassImageViewScaleInAnimator = new CustomAnimationHelper(new View[]{grassImageView},grassImageViewScaleInAnimatorSet, CustomAnimationHelper.InterpolatorType.DECELERATE,true);
-        CustomAnimationHelper grassImageViewScaleOutAnimator = new CustomAnimationHelper(new View[]{grassImageView},grassImageViewScaleOutAnimatorSet, CustomAnimationHelper.InterpolatorType.ACCELERATE,true);
-        grassImageViewScaleInAnimator.scaleIn(400,0f,-1f);
-        grassImageViewScaleOutAnimatorSet.setStartDelay(3700);
-        grassImageViewScaleOutAnimator.scaleOut(400,0f,-1f);
+        CustomAnimationHelper grassImageViewFadeOutAnimator = new CustomAnimationHelper(new View[]{grassImageView},grassImageViewFadeOutAnimatorSet, CustomAnimationHelper.InterpolatorType.ACCELERATE,true);
+        grassImageViewScaleInAnimator.scaleIn(150,0f,-1f);
+        grassImageViewFadeOutAnimatorSet.setStartDelay(4000);
+        grassImageViewFadeOutAnimator.scaleOut(150,0f,-1f);
 
         tvWelcomeSlideOutAnimatorSet.setStartDelay(3500);
-        tvWelcomeSlideInAnimator.slideIn(1000,-500f,0f);
-        tvWelcomeSlideOutAnimator.slideOut(1000,500f,0f);
+        tvWelcomeSlideInAnimator.slideIn(1000,-2000f,0f);
+        tvWelcomeSlideOutAnimator.fadeOut(1000);
     }
 
     public static void startResumeAnimation(){
