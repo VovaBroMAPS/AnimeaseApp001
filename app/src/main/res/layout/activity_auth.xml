@@ -11,7 +11,7 @@
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lavWelcome"
         android:layout_width="500dp"
-        android:layout_height="200dp"
+        android:layout_height="165dp"
         app:lottie_renderMode="hardware"
         app:lottie_repeatMode="reverse"
         app:lottie_loop="true"
@@ -65,5 +65,13 @@
         android:text="REGISTER"
         android:textSize="25dp"
 />
+
+    <ImageView
+        android:id="@+id/grassImageView"
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:src="@drawable/green"
+        android:layout_gravity="bottom"
+        />
 
 </LinearLayout>
