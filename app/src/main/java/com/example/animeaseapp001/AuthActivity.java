@@ -72,9 +72,11 @@ public class AuthActivity extends AppCompatActivity {
     public void startWelcomeAnimation(){
 
         lavWelcome.setVisibility(View.VISIBLE);
+        lavAuth.setVisibility(View.GONE);
+        tvAuthAnimease.setVisibility(View.GONE);
+        tvAuthToContinue.setVisibility(View.GONE);
         btnAuthRegister.setVisibility(View.GONE);
         btnAuthLogin.setVisibility(View.GONE);
-        lavAuth.setVisibility(View.GONE);
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -83,13 +85,15 @@ public class AuthActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        AuthActivity.lavAuth.setVisibility(View.VISIBLE);
+                        AuthActivity.tvAuthAnimease.setVisibility(View.VISIBLE);
+                        AuthActivity.tvAuthToContinue.setVisibility(View.VISIBLE);
                         AuthActivity.btnAuthLogin.setVisibility(View.VISIBLE);
                         AuthActivity.btnAuthRegister.setVisibility(View.VISIBLE);
-                        AuthActivity.lavAuth.setVisibility(View.VISIBLE);
                         AuthActivity.lavWelcome.setVisibility(View.GONE);
 
                         AnimatorSet lavAuthAndBtnAnimatorSet = new AnimatorSet();
-                        CustomAnimationHelper lavAuthAndBtnAnimator = new CustomAnimationHelper(new View[]{btnAuthLogin,btnAuthRegister,lavAuth},lavAuthAndBtnAnimatorSet, CustomAnimationHelper.InterpolatorType.DECELERATE,false);
+                        CustomAnimationHelper lavAuthAndBtnAnimator = new CustomAnimationHelper(new View[]{lavAuth,tvAuthAnimease,tvAuthToContinue,btnAuthLogin,btnAuthRegister},lavAuthAndBtnAnimatorSet, CustomAnimationHelper.InterpolatorType.DECELERATE,false);
                         lavAuthAndBtnAnimator.slideIn(100,0f,-30f);
                     }
                 });
@@ -108,7 +112,7 @@ public class AuthActivity extends AppCompatActivity {
 
     public static void startResumeAnimation(){
         AnimatorSet lavAuthAndBtnAnimatorSet = new AnimatorSet();
-        CustomAnimationHelper lavAuthAndBtnAnimator = new CustomAnimationHelper(new View[]{btnAuthLogin,btnAuthRegister,lavAuth},lavAuthAndBtnAnimatorSet, CustomAnimationHelper.InterpolatorType.DECELERATE,false);
+        CustomAnimationHelper lavAuthAndBtnAnimator = new CustomAnimationHelper(new View[]{lavAuth,tvAuthAnimease,tvAuthToContinue,btnAuthLogin,btnAuthRegister},lavAuthAndBtnAnimatorSet, CustomAnimationHelper.InterpolatorType.DECELERATE,false);
         lavAuthAndBtnAnimator.slideIn(150,0f,-30f);
         lavAuthAndBtnAnimatorSet.setStartDelay(300);
     }
