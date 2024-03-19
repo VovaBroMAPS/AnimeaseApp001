@@ -68,7 +68,7 @@ public class CustomAnimationHelper {
 
             for (int i=0; i<this.views.length; i++){
                 AnimatorSet viewAnimatorSet = new AnimatorSet();
-                ObjectAnimator alphaAnimator =ObjectAnimator.ofFloat(this.views[i], "alpha", 0f, 1f);
+                ObjectAnimator alphaAnimator =ObjectAnimator.ofFloat(this.views[i], "alpha", 1f, 0f);
 
                 alphaAnimator.setDuration(duration);
                 alphaAnimator.setInterpolator(getInterpolator());
