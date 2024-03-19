@@ -10,40 +10,60 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lavWelcome"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
+        android:layout_width="500dp"
+        android:layout_height="200dp"
         app:lottie_renderMode="hardware"
         app:lottie_repeatMode="reverse"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/welcome_animation"
         app:lottie_autoPlay="true"
-        android:layout_marginBottom="30dp"/>
-
-    <Button
-        android:id="@+id/btnAuthLogin"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:text="LOGIN"
-        android:layout_marginBottom="10dp"
         />
-
-    <Button
-        android:id="@+id/btnAuthRegister"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:text="REGISTER"
-        android:layout_marginTop="10dp"/>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lavAuth"
         android:layout_marginTop="10dp"
         android:layout_width="400dp"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         app:lottie_renderMode="hardware"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/auth_animation"
         >
     </com.airbnb.lottie.LottieAnimationView>
+
+    <TextView
+        android:id="@+id/tvAuthAnimease"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Animease"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"
+        />
+    <TextView
+        android:id="@+id/tvAuthToContinue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login or Register to continue"
+        android:textSize="20dp"
+        />
+
+    <Button
+        android:id="@+id/btnAuthLogin"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:text="LOGIN"
+        android:textSize="25dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <Button
+        android:id="@+id/btnAuthRegister"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:text="REGISTER"
+        android:textSize="25dp"
+/>
 
 </LinearLayout>

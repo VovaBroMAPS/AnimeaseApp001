@@ -43,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
                     insertUser();
                     Intent intent = new Intent(RegisterActivity.this,HomeActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         });
