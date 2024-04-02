@@ -14,7 +14,7 @@
         android:orientation="horizontal">
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerView"
+            android:id="@+id/fcvProjectProperties"
             android:layout_width="750dp"
             android:layout_height="820dp"
             android:layout_marginTop="30dp" />
@@ -25,6 +25,7 @@
             android:orientation="vertical">
 
             <ListView
+                android:id="@+id/lvProjects"
                 android:layout_width="400dp"
                 android:layout_height="650dp"
                 android:layout_marginTop="30dp"

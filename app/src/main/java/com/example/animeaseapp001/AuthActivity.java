@@ -45,9 +45,8 @@ public class AuthActivity extends AppCompatActivity {
             startActivity(intent);
         });
         btnAuthRegister.setOnClickListener(v -> {
-            startWelcomeAnimation();
-            //Intent intent = new Intent(AuthActivity.this,RegisterActivity.class);
-            //startActivity(intent);
+            Intent intent = new Intent(AuthActivity.this,RegisterActivity.class);
+            startActivity(intent);
         });
 
     }

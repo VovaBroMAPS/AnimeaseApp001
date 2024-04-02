@@ -4,9 +4,11 @@ package com.example.animeaseapp001;
 
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 
 
 import androidx.annotation.Nullable;
@@ -51,6 +53,20 @@ public class ProjectsDB extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + PROJECTS_TABLE);
         onCreate(db);
+    }
+
+    public long insertProject(String name, int width, int height, int framerate, Uri backgroundUri, long duration) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(PROJ_NAME, name);
+        values.put(PROJ_RESOLUTION_WIDTH, width);
+        values.put(PROJ_RESOLUTION_HEIGHT, height);
+        values.put(PROJ_FRAMERATE, framerate);
+        values.put(ProjectsDB.PROJ_BACKGROUND, backgroundUri.toString());
+        values.put(DURATION, duration);
+        long newRowId = db.insert(PROJECTS_TABLE, null, values);
+        db.close();
+        return newRowId;
     }
 
 }

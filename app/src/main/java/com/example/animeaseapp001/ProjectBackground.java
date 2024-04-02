@@ -1,3 +1,5 @@
+package com.example.animeaseapp001;
+
 public class ProjectBackground {
     private long id;
     private String uri;
