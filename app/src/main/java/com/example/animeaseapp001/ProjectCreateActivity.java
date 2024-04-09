@@ -33,6 +33,7 @@ public class ProjectCreateActivity extends AppCompatActivity {
     Button btnCreateProject;
     Spinner spinnerResolution, spinnerFramerate;
     ImageView ivSelectImage;
+
     private static final int PICK_IMAGE_REQUEST = 1;
     Uri imageUri = null;
 
@@ -68,26 +69,6 @@ public class ProjectCreateActivity extends AppCompatActivity {
         });
 
         etProjectDuration.setFilters(new InputFilter[] { new InputFilter.LengthFilter(8) }); // Limit input length
-        etProjectDuration.addTextChangedListener(new TextWatcher() {
-            private static final String DURATION_PATTERN = "^([0-9]{2}):([0-5][0-9]):([0-5][0-9])$";
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String input = s.toString();
-                if (!input.matches(DURATION_PATTERN)) {
-                    etProjectDuration.setText(input.substring(0, input.length() - 1));
-                    etProjectDuration.setSelection(etProjectDuration.getText().length());
-                }
-            }
-        });
 
 
         String[] resolutionOptions = {"1920x1080", "1280x720", "854x480", "640x360"};

@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ProjectListActivity"
-    android:padding="20dp">
+    tools:context=".ProjectListActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
