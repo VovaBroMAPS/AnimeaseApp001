@@ -16,6 +16,7 @@ public class KeyframesDB extends SQLiteOpenHelper {
     public static final String TRANSLATION_Y = "translationY";
     public static final String ROTATION_Y = "rotationY";
     public static final String ALPHA = "alpha";
+    public static final String INTERPOLATOR = "interpolator";
 
     public KeyframesDB(@Nullable Context context) {
         super(context, "keyframesDB.db", null, 1);
@@ -28,7 +29,8 @@ public class KeyframesDB extends SQLiteOpenHelper {
         s+=TRANSLATION_X+" TEXT, ";
         s+=TRANSLATION_Y+" TEXT, ";
         s+=ROTATION_Y+" TEXT, ";
-        s+=ALPHA+" TEXT)";
+        s+=ALPHA+" TEXT, ";
+        s+=INTERPOLATOR+" TEXT)";
         db.execSQL(s);
     }
 
